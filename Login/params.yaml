@@ -1,0 +1,10 @@
+symbols:
+  - NSE:SBIN
+  - NSE:RELIANCE
+  - NSE:INFY
+  - NSE:TCS
+
+risks:
+    max_risk_per_trade_pct: 0.5
+    stop_gap_pct: 0.5
+    max_positions: 3
