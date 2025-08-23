@@ -31,7 +31,7 @@ HOST = "127.0.0.1"
 
 
 def serializer(obj): return isinstance(obj, (date, datetime, Decimal)) and str(obj)  # noqa
-load_dotenv(".env")
+load_dotenv("..env")
 key = os.getenv("KITE_API_KEY")
 secret = os.getenv("KITE_API_SECRET")
 

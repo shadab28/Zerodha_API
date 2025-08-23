@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import pandas as pd
 import os
 if __name__ == "__main__":
-    load_dotenv(".env")
+    load_dotenv("..env")
     ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
     key = os.getenv("KITE_API_KEY")
     secret = os.getenv("KITE_API_SECRET")
@@ -18,17 +18,17 @@ if __name__ == "__main__":
     kite.set_access_token(data['access_token'])
     access_token = data['access_token']
 
-    with open(".env", "r") as f:
+    with open("..env", "r") as f:
         lines = f.readlines()
 
-    with open(".env", "w") as f:
+    with open("..env", "w") as f:
         for line in lines:
             if line.startswith("KITE_ACCESS_TOKEN="):
                 f.write(f"KITE_ACCESS_TOKEN={access_token}\n")
             else:
                 f.write(line)
 
-    print("✅ KITE_ACCESS_TOKEN updated in .env")
+    print("✅ KITE_ACCESS_TOKEN updated in ..env")
 
     historical_data = True
 

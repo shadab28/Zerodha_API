@@ -21,7 +21,7 @@ def get_token_from_symbol(symbols):
 
 class KiteMarketDataSocket:
     def __init__(self, token_list):
-        load_dotenv(".env")
+        load_dotenv("..env")
         api_key = os.getenv("KITE_API_KEY")
         access_token = os.getenv("KITE_ACCESS_TOKEN")
 

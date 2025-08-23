@@ -94,7 +94,7 @@ if __name__ == "__main__":
     if not instrument:
         raise RuntimeError("No instruments found in NiftySymbol.py")
     tokens = get_token_from_symbol(instrument)
-    load_dotenv(".env")
+    load_dotenv("..env")
     api_key = os.getenv("KITE_API_KEY")
     secret = os.getenv("KITE_API_SECRET")
     access_token = os.getenv("KITE_ACCESS_TOKEN")
