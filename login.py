@@ -17,8 +17,8 @@ if __name__ == "__main__":
     data = kite.generate_session(request_token, api_secret=secret)
     kite.set_access_token(data['access_token'])
     access_token = data['access_token']
-
-    with open("..env", "r") as f:
+    # login_status = True
+    with open("..env", "r") as f:   
         lines = f.readlines()
 
     with open("..env", "w") as f:
