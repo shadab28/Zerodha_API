@@ -1,0 +1,7 @@
+kiteconnect
+pandas
+matplotlib
+plotly
+numpy
+ta-lib
+scikit-learn
