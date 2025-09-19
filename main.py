@@ -90,40 +90,41 @@ def place_amo_order(symbol, quantity, signal):
     print(f"After Market Order placed for {symbol} with quantity {quantity} and signal {signal}")
 
 if __name__ == "__main__":
-    instrument = ns.mystocks  # Example instrument list
+    instrument = ns.NiftyMidcap100  # Example instrument list
     if not instrument:
         raise RuntimeError("No instruments found in NiftySymbol.py")
     tokens = get_token_from_symbol(instrument)
-    load_dotenv("..env")
+    load_dotenv(".env")
     api_key = os.getenv("KITE_API_KEY")
     secret = os.getenv("KITE_API_SECRET")
     access_token = os.getenv("KITE_ACCESS_TOKEN")
-    kite = KiteConnect(api_key)
+    kite = KiteConnect(api_key,disable_ssl=True)
     kite.set_access_token(access_token)
 
     while True:
-        if not is_market_open():
+        if is_market_open():
             print("Market open. Processing data...")
             to_date=datetime.now().strftime("%Y-%m-%d")
             from_date = (datetime.now() - timedelta(days=4)).strftime("%Y-%m-%d")
             orderbook = []
             for token in tokens:
                 hist_data = kite.historical_data(token, from_date, to_date, interval="5minute")
-                filter_data = pd.DataFrame(hist_data).sort_values(by='date').tail(200).iloc[::-1]
+                filter_data = pd.DataFrame(hist_data).sort_values(by='date').tail(250).iloc[::-1]
                 signal = check_signal(filter_data)
                 if signal != "HOLD":
                     symbol = get_symbol_from_token([token])[0]
                     orderbook.append({"symbol": symbol, "signal": signal, "close": float(filter_data.iloc[-1]['close'])})
+                    print(f"Signal for {symbol} is {signal} with close price {filter_data.iloc[-1]['close']}")
         else:
             print("Market closed. Skipping data processing.")
         for order in orderbook:
             quantity = round(10000 / order["close"])
             # print(f"Placing order for {order['symbol']} with quantity {quantity} and signal {order['signal']}")
-            if is_market_open():
-                place_order(order["symbol"], quantity, order["signal"])
-            else:
-                place_amo_order(order["symbol"], quantity, order["signal"])
-            
+            # if is_market_open():
+            #     place_order(order["symbol"], quantity, order["signal"])
+            # else:
+            #     place_amo_order(order["symbol"], quantity, order["signal"])
+        
         print("Sleeping for 5 minutes...")
         time.sleep(300)  # Sleep for 5 minutes (300 seconds)
 
