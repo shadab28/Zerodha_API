@@ -42,7 +42,7 @@ if __name__ == "__main__":
         print(hist_data)
 
 
-    download_instrumet = True
+    download_instrumet = False
     if download_instrumet:
         for exchange in ['NSE', 'BSE']:
             instrument = kite.instruments(exchange)

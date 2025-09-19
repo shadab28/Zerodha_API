@@ -8,14 +8,14 @@ import pandas as pd
 
 
 def get_token_from_symbol(symbols):
-    ins = pd.read_csv("Csvs/NSE_all_instruments.csv")
+    ins = pd.read_csv("Csvs/BSE_all_instruments.csv")
     by_key = {
         (row["exchange"], row["tradingsymbol"]): row
         for _, row in ins.iterrows()
     }
     resolved = []
     for s in symbols:
-        key = ("NSE", s)
+        key = ("BSE", s)
         if key not in by_key:
             print(f"Skipping symbol, instrument not found: {key}")
             continue  # Skip if not found
@@ -25,13 +25,13 @@ def get_token_from_symbol(symbols):
 
 
 def get_symbol_from_token(tokens):
-    ins = pd.read_csv("Csvs/NSE_all_instruments.csv")
+    ins = pd.read_csv("Csvs/BSE_all_instruments.csv")
     by_key = {
         (row["exchange"], row["instrument_token"]): row
         for _, row in ins.iterrows()
     }
     resolved = []
-    key = ("NSE", tokens)
+    key = ("BSE", tokens)
     if key not in by_key:
         raise RuntimeError(f"Instrument not found: {key}")
     row = by_key[key]
@@ -50,7 +50,7 @@ tokens = [...]  # your list of tokens
 token_stockname_map = {...}  # token to stock name mapping, optional
 
 if __name__ == "__main__":
-    instrument = ns.all_stock  # Example instrument list
+    instrument = ns.bse_stock  # Example instrument list
     if not instrument:
         raise RuntimeError("No instruments found in NiftySymbol.py")
     tokens = get_token_from_symbol(instrument)
